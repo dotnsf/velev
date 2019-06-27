@@ -1,0 +1,34 @@
+.waiting_up{
+  color: #f00;
+}
+.waiting_down{
+  color: #00f;
+}
+.elevator_up{
+  margin: 0px;
+  width: 100%;
+  height: 100%;
+  color: #f00;
+  background-color: #fcc;
+}
+.elevator_down{
+  margin: 0px;
+  width: 100%;
+  height: 100%;
+  color: #00f;
+  background-color: #ccf;
+}
+.elevator_stop{
+  margin: 0px;
+  width: 100%;
+  height: 100%;
+  color: #000;
+  background-color: #ccc;
+}
+.completed{
+  font-weight: bold;
+  color: #f0f;
+}
+#sim_panel>table{
+  text-align: center;
+}

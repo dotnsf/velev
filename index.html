@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C/DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>velev</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="apple-web-app-capable" content="yes"/>
+
+<script src="https://code.jquery.com/jquery-2.0.3.min.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"/>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.css"/>
+<script src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.js"></script>
+
+<script src="velev.js"></script>
+<script src="velev_base.js"></script>
+<link rel="stylesheet" href="velev.css"/>
+</head>
+<body>
+
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="#">velev</a>
+  <ul class="navbar-nav mr-auto"></ul>
+  <ul class="navbar-nav" id="navbar">
+    <li id="sec">
+      <input id="start_btn" class="btn btn-primary" type="button" onClick="start();" value="start"/>
+    </li>
+  </ul>
+</nav>
+
+<div id="config_panel" class="container" style="padding: 50px 0 0 0;">
+  <ul class="nav nav-tabs">
+    <li class="nav-item"><a href="#tab1" class="nav-link active" data-toggle="tab">settings</a></li>
+    <li class="nav-item"><a href="#tab2" class="nav-link" data-toggle="tab">waiting queue</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="tab1" class="tab-pane active">
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr><th>property</th><th>value</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>エレベータの基数</td><td><input type="text" id="prop_num" value="4"/></td></tr>
+          <tr><td>ビルのフロア数</td><td><input type="text" id="prop_max_floor" value="5"/></td></tr>
+          <tr><td>エレベータ１基の定員</td><td><input type="text" id="prop_limit" value="10"/></td></tr>
+          <tr><td>エレベータが１フロア移動するのに必要な秒数</td><td><input type="text" id="prop_move_second" value="2"/></td></tr>
+          <tr><td>エレベータがフロアで乗降時に停止する秒数</td><td><input type="text" id="prop_stop_second" value="3"/></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div id="tab2" class="tab-pane">
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr><th>sec</th><th>from</th><th>to</th></tr>
+        </thead>
+        <tbody id="wating_queue_table_tbody">
+        </tbody>
+      </table>
+    </div>
+    </div>
+</div>
+
+<div id="sim_panel" class="container" style="padding: 50px 0 0 0; display: none;">
+  <table class="table table-bordered" id="sim_table">
+    <thead id="sim_table_thead">
+      <tr id="sim_table_thead_tr">
+        <td>floor</td>
+        <td>waiting</td>
+      </tr>
+    </thead>
+    <tbody id="sim_table_tbody">
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>
