@@ -31,4 +31,10 @@
 }
 #sim_panel>table{
   text-align: center;
+  height: 100%;
+}
+
+td{
+  height: 100%;
+  margin: 0;
 }
