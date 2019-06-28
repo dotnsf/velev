@@ -549,7 +549,13 @@ function checkCompleted(){
           + 'avg_wait: ' + ( sum_wait / people_num ) + '\n'
           + 'max_process: ' + max_process + '\n'
           + 'avg_process: ' + ( sum_process / people_num );
-        alert( msg );
+        //alert( msg );
+        $('#result_sec').html( sec );
+        $('#result_max_wait').html( max_wait );
+        $('#result_avg_wait').html( ( sum_wait / people_num ) );
+        $('#result_max_process').html( max_process );
+        $('#result_avg_process').html( ( sum_process / people_num ) );
+        $('#resultModal').modal();
 
         r = true;
       }

@@ -74,5 +74,29 @@
   </table>
 </div>
 
+<div class="modal bd-example-modal-lg fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="resultModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="resultModalLabel">運搬完了！</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="resultmodal-body">
+        <table class="table table-bordered">
+          <tbody>
+            <tr><td>秒数</td><td id="result_sec"></td></tr>
+            <tr><td>最長エレベータ待ち（秒）</td><td id="result_max_wait"></td></tr>
+            <tr><td>平均エレベータ待ち（秒）</td><td id="result_avg_wait"></td></tr>
+            <tr><td>最長目的地到着（秒）</td><td id="result_max_process"></td></tr>
+            <tr><td>平均目的地到着（秒）</td><td id="result_avg_process"></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
