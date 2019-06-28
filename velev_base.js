@@ -150,14 +150,15 @@ class elevator{
 
   //. １秒経過
   oneSecondLater(){
-    //. 中にいる人
+    //. エレベータの中にいる人の経過時間を更新
     this.people.forEach( function( p ){
       p.waitsec ++;
     });
 
+    //. エレベータのモードで場合分け
     switch( this.mode ){
-    case 0:
-      //. ボタンをチェック
+    case 0: //. 停止モード
+      //. エレベータ内のボタンが押されているか調べる
       var b = -10000;
       for( var i = 0; i < this.max_floor && b == -10000; i ++ ){
         if( this.buttons[i] == 1 ){
@@ -166,12 +167,15 @@ class elevator{
       }
       if( b != -10000 ){
         if( this.floor < b ){
+          //. 今いる階よりも上の階が押されていた
           this.updown = 1;
           this.mode = 1;
         }else if( this.floor > b ){
+          //. 今いる階よりも下の階が押されていた
           this.updown = -1;
           this.mode = 1;
         }else{
+          //. 今いる階が押されていた
           this.mode = 0;
         }
       }
@@ -195,13 +199,15 @@ class elevator{
       if( this.stop_count == this.stop_second ){
         //. 乗降完了
         this.stop_count = 0;
-        this.buttons[this.floor-1] = 0;
+        //this.buttons[this.floor-1] = 0;
 
         //. 次の目的方向を決める
         if( this.updown == 1 ){
+          //. 現在上向き
           var b = false;
-          for( var i = this.floor; i < this.max_floor && !b; i ++ ){
+          for( var i = this.floor + 1; i < this.max_floor && !b; i ++ ){
             if( this.buttons[i] == 1 ){
+              //. 現在よりも上の階のボタンが押されている
               b = true;
             }
           }
@@ -210,14 +216,23 @@ class elevator{
             this.mode = 1;
           }else{
             //. 下階のボタンが押されている可能性は？
-            for( var i = 0; i < this.max_floor; i ++ ){
-              this.buttons[i] = 0;
+            for( var i = 0; i < this.floor && !b; i ++ ){
+              if( this.buttons[i] == 1 ){
+                //. 現在よりも下の階のボタンが押されている
+                b = true;
+              }
             }
-
-            //. 停止モード
-            this.mode = 0;
+            if( b ){
+              //. 下向きに移動
+              this.updown = -1;
+              this.mode = 1;
+            }else{
+              //. 停止モード
+              this.mode = 0;
+            }
           }
         }else if( this.updown == -1 ){
+          //. 現在下向き
           var b = false;
           for( var i = 0; i < this.floor && !b; i ++ ){
             if( this.buttons[i] == 1 ){
@@ -229,12 +244,20 @@ class elevator{
             this.mode = 1;
           }else{
             //. 上階のボタンが押されている可能性は？
-            for( var i = 0; i < this.max_floor; i ++ ){
-              this.buttons[i] = 0;
+            for( var i = this.floor + 1; i < this.max_floor && !b; i ++ ){
+              if( this.buttons[i] == 1 ){
+                //. 現在よりも上の階のボタンが押されている
+                b = true;
+              }
             }
-
-            //. 停止モード
-            this.mode = 0;
+            if( b ){
+              //. 上向きに移動
+              this.updown = 1;
+              this.mode = 1;
+            }else{
+              //. 停止モード
+              this.mode = 0;
+            }
           }
         }
       }else{
@@ -356,10 +379,11 @@ var sec = 0;
 var max_wait = max_process = sum_wait = sum_process = 0;
 var people_num = waiting_queue.length;
 function oneSecond(){
+  //. １秒経過
   sec ++;
   fireOneSecond( sec );
 
-  //. エレベータ前で待っている人
+  //. エレベータ前で待っている人の待ち時間を更新
   people_by_floor.forEach( function( people_in_floor ){
     people_in_floor[0].forEach( function( p ){
       p.waitsec ++;
@@ -369,22 +393,26 @@ function oneSecond(){
     });
   });
 
-  //. やってくる人
+  /*
+  //. エレベータ前にやってくる人
   while( waiting_queue.length > 0 && waiting_queue[0].sec <= sec ){
     var w = waiting_queue.shift();
     var p = new person( w.src, w.dst );
     if( w.src < w.dst ){
+      //. 上の階に向かおうとする人がやってきた
       floors[w.src-1].up = true;
       people_by_floor[w.src-1][1].push( p );
       fireCallButtonPush( w.src, 1 );
     }else{
+      //. 下の階に向かおうとする人がやってきた
       floors[w.src-1].down = true;
       people_by_floor[w.src-1][0].push( p );
       fireCallButtonPush( w.src, -1 );
     }
   }
+  */
 
-  //. エレベータの動き
+  //. エレベータの挙動を更新
   elevators.forEach( function( elev ){
     elev.oneSecondLater();
   });
@@ -421,6 +449,24 @@ function oneSecond(){
     }
   }
 
+  //. エレベータ前にやってくる人
+  while( waiting_queue.length > 0 && waiting_queue[0].sec <= sec ){
+    var w = waiting_queue.shift();
+    var p = new person( w.src, w.dst );
+    if( w.src < w.dst ){
+      //. 上の階に向かおうとする人がやってきた
+      floors[w.src-1].up = true;
+      people_by_floor[w.src-1][1].push( p );
+      fireCallButtonPush( w.src, 1 );
+    }else{
+      //. 下の階に向かおうとする人がやってきた
+      floors[w.src-1].down = true;
+      people_by_floor[w.src-1][0].push( p );
+      fireCallButtonPush( w.src, -1 );
+    }
+  }
+
+  //. 画面更新
   showCurrentStatus();
 
   //. 終了チェック
@@ -572,7 +618,17 @@ function start(){
   sim_start();
 }
 
+
+//. 画面の初期化
 $(function(){
+  //. エレベーター設定
+  $('#prop_num').val( default_settings.num );
+  $('#prop_max_floor').val( default_settings.max_floor );
+  $('#prop_limit').val( default_settings.limit );
+  $('#prop_move_second').val( default_settings.move_second );
+  $('#prop_stop_second').val( default_settings.stop_second );
+
+  //. 待ち行列
   waiting_queue.forEach( function( q ){
     var tr = '<tr>'
       + '<td>' + q.sec + '</td>'

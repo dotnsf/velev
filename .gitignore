@@ -1,4 +1,5 @@
 node_modules/
 old/
 package-lock.json
+velev.js.*
 settings.js.*
