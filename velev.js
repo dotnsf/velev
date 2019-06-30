@@ -26,36 +26,54 @@ var waiting_queue = [
 
 //. １秒毎に呼び出される関数
 function fireOneSecond( second ){
-  //console.log( 'fireOneSecond(' + second + '): ' );
+  try{
+    //. この try ブロック内にカスタマイズコードを記述可能です。
+    //console.log( 'fireOneSecond(' + second + '): ' );
 
+  }catch(e){
+    $('#resultmodal-body').html( JSON.stringify( e ) );
+    $('#resultModal').modal();
+  }
 }
 
 //. エレベータ呼び出しのボタンが押された
 function fireCallButtonPush( floor, updown ){ //. floor: 階, updown: { -1: 下, 1: 上 }
-  //console.log( 'fireCallButtonPush(' + floor + ',' + updown + '): ' );
+  try{
+    //. この try ブロック内にカスタマイズコードを記述可能です。
+    //console.log( 'fireCallButtonPush(' + floor + ',' + updown + '): ' );
 
-  //. サンプルコード
-  /*
-   このコードなしにデフォルト設定の waiting_queue のまま実行すると、
-   最後の（３０秒後に５階にやってくる）人がいつまでもエレベータに乗れなくなる。
+    //. サンプルコード
+    /*
+     このコードなしにデフォルト設定の waiting_queue のまま実行すると、
+     最後の（３０秒後に５階にやってくる）人がいつまでもエレベータに乗れなくなる。
 
-  var elevators_status = getElevatorsStatus();
-  var idx = -1;
-  for( var i = 0; i < elevators_status.length && idx == -1; i ++ ){
-    var s = elevators_status[i];
-    if( s.mode == 0 ){  //. 停止中のエレベータがあったら使う
-      idx = i;
-      goFloor( idx, floor );
+     */
+    var elevators_status = getElevatorsStatus();
+    var idx = -1;
+    for( var i = 0; i < elevators_status.length && idx == -1; i ++ ){
+      var s = elevators_status[i];
+      if( s.mode == 0 ){  //. 停止中のエレベータがあったら使う
+        idx = i;
+        goFloor( idx, floor );
+      }
     }
+    if( idx == -1 ){
+      //. 停止中のエレベータがなかったら？？
+    }
+  }catch(e){
+    $('#resultmodal-body').html( JSON.stringify( e ) );
+    $('#resultModal').modal();
   }
-  if( idx == -1 ){
-    //. 停止中のエレベータがなかったら？？
-  }
-   */
 }
 
 //. エレベータ内のボタンが押された
 function fireElevatorButtonPush( num, floor ){ //. num: エレベータ番号(0 - n-1), floor: 階
-  //console.log( 'fireElevatorButtonPush(' + num + ',' + floor + '): ' );
+  try{
+    //. この try ブロック内にカスタマイズコードを記述可能です。
+    //console.log( 'fireElevatorButtonPush(' + num + ',' + floor + '): ' );
 
+  }catch(e){
+    $('#resultmodal-body').html( JSON.stringify( e ) );
+    $('#resultModal').modal();
+  }
 }
