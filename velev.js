@@ -47,7 +47,6 @@ function fireCallButtonPush( floor, updown ){ //. floor: 階, updown: { -1: 下,
      このコードなしにデフォルト設定の waiting_queue のまま実行すると、
      最後の（３０秒後に５階にやってくる）人がいつまでもエレベータに乗れなくなる。
 
-     */
     var elevators_status = getElevatorsStatus();
     var idx = -1;
     for( var i = 0; i < elevators_status.length && idx == -1; i ++ ){
@@ -60,6 +59,7 @@ function fireCallButtonPush( floor, updown ){ //. floor: 階, updown: { -1: 下,
     if( idx == -1 ){
       //. 停止中のエレベータがなかったら？？
     }
+     */
   }catch(e){
     $('#resultmodal-body').html( JSON.stringify( e ) );
     $('#resultModal').modal();
